@@ -1,0 +1,12 @@
+{
+  "name": "Word-of-the-Day-App",
+  "displayName": "Word-of-the-Day-App",
+  "expo": {
+    "name": "Word-of-the-Day-App",
+    "slug": "Word-of-the-Day-App",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
