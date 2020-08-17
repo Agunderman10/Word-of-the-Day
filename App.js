@@ -47,6 +47,8 @@ export default function App() {
       .then((data) => {
         setWordOfTheDay(data);
         return data;
+      }).catch(() => {
+        Alert.alert('Error', 'There was an error getting a random word. Is the random word api down?');
       });
   };
 
@@ -61,7 +63,7 @@ export default function App() {
         setDefinition(data[0].shortdef);
         setPartOfSpeech(data[0].fl);
       }).catch(() => {
-        Alert.alert('Error Retrieving Word Info', "You probably forgot to add the API Key. If you're unsure of how to do this check the README for more information.")
+        Alert.alert('Error Retrieving Word Info', "You probably forgot to add the API Key. If you're unsure of how to do this check the README for more information.");
       });
   };
 
