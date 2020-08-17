@@ -1,7 +1,6 @@
 # Word-of-the-Day-App
 
 # To-Do
-* Make a button that will let users generate a new word
 * Fix the UI, cause rn it's a disaster
 * Fix UX issue where the word information takes a few seconds to show up. Something to distract the user with...
 
