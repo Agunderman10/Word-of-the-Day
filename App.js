@@ -5,7 +5,7 @@ import {
   View,
   SafeAreaView,
   TextInput,
-  AsyncStorage,
+  AsyncStorage, // I'm well aware of AsyncStorage's slow runtime and lack of indexing capabilities, but for this use case it's fine. Don't judge, bro. Don't judge.
   Button,
   Alert
 } from "react-native";
@@ -25,6 +25,7 @@ export default function App() {
     // if it's not different then don't do anything.
 
     const dateInDB = await AsyncStorage.getItem("DATE_FOR_WORD_OF_THE_DAY");
+    console.log(dateInDB);
     var today = new Date();
     var date =
       today.getFullYear() +
@@ -33,19 +34,38 @@ export default function App() {
       "-" +
       today.getDate();
 
-    if (dateInDB === "") {
-      AsyncStorage.setItem("DATE_FOR_WORD_OF_THE_DAY", date);
+    if (dateInDB === null) {
+      console.log("in 1: " + dateInDB)
+      await AsyncStorage.setItem("DATE_FOR_WORD_OF_THE_DAY", date);
       getWordInfo(await getNewRandomWord());
     } else if (dateInDB !== date) {
+      console.log("in 2: " + dateInDB)
       getWordInfo(await getNewRandomWord());
     }
+    else {
+      console.log("in 3: " + dateInDB)
+      getWordDataFromAsyncStorage();
+      //AsyncStorage.removeItem("DATE_FOR_WORD_OF_THE_DAY") // temporary
+    }
   }, []);
+
+  const getWordDataFromAsyncStorage = async () => {
+    setWordOfTheDay(await AsyncStorage.getItem("WORD_OF_THE_DAY"));
+    setDefinition(await AsyncStorage.getItem("WORD_OF_THE_DAY_DEFINITION"));
+    setPartOfSpeech(await AsyncStorage.getItem("WORD_OF_THE_DAY_PART_OF_SPEECH"));
+  }
+
+  const addWordDataToAsyncStorage = async (word, shortdef, fl) => {
+    await AsyncStorage.setItem("WORD_OF_THE_DAY", word);
+    await AsyncStorage.setItem("WORD_OF_THE_DAY_DEFINITION", shortdef);
+    await AsyncStorage.setItem("WORD_OF_THE_DAY_PART_OF_SPEECH", fl);
+  }
 
   const getNewRandomWord = async () => {
     return await fetch("https://random-word-api.herokuapp.com/word?number=1")
       .then((response) => response.json())
       .then((data) => {
-        setWordOfTheDay(data);
+        setWordOfTheDay(data[0]);
         return data;
       }).catch(() => {
         Alert.alert('Error', 'There was an error getting a random word. Is the random word api down?');
@@ -53,17 +73,16 @@ export default function App() {
   };
 
   const getWordInfo = async (word) => {
-    console.log(word);
     await fetch(
       `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${API_KEY}`
     )
       .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setDefinition(data[0].shortdef);
+      .then(async (data) => {
+        setDefinition(data[0].shortdef[0]);
         setPartOfSpeech(data[0].fl);
-      }).catch(() => {
-        Alert.alert('Error Retrieving Word Info', "You probably forgot to add the API Key. If you're unsure of how to do this check the README for more information.");
+        await addWordDataToAsyncStorage(JSON.stringify(word[0]), JSON.stringify(data[0].shortdef[0]), JSON.stringify(data[0].fl));
+      }).catch((error) => {
+        Alert.alert('Error Retrieving Word Info', "You probably forgot to add the API Key. If you're unsure of how to do this check the README for more information.\n\nActual error: " + error);
       });
   };
 
