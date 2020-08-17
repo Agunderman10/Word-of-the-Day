@@ -21,7 +21,7 @@ I'll go over a quick guide on how to get the app running in case you're unfamili
 
 * Our clone brought the project onto our local machine, but there are external packages that we still need to install. Navigate into the project directory with the cd (change directory as shown below) command and with [NPM](https://nodejs.org/en/) (npm will come with the installation of nodejs) installed type the following into your terminal:
 > cd Word-of-the-Day
-> npm install
+>> npm install
 
 * Next, connect your phone with the correct cord (usb to an android in my case). Make sure you have developer options turned on. I'll let you google how to do that on your individual phone. Gotta make you work for something ;)
 
