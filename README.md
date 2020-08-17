@@ -4,6 +4,7 @@
 * Fix storage issue so user only gets one word per day
 * Make a button that will let users generate a new word
 * Fix the UI, cause rn it's a disaster
+* Fix UX issue where the word information takes a few seconds to show up. Something to distract the user with...
 
 ## What is this app?
 This app's sole purpose is to randomly generate a new word for you to learn everyday.
