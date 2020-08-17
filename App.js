@@ -13,6 +13,7 @@ import { styles } from "./styles";
 //import AsyncStorage from 'react-native';
 
 export default function App() {
+  const API_KEY = 'YOUR_API_KEY_HERE';
   const [wordOfTheDay, setWordOfTheDay] = useState('');
   const [definition, setDefinition] = useState('');
   const [partOfSpeech, setPartOfSpeech] = useState('');
@@ -51,7 +52,7 @@ export default function App() {
   const getWordInfo = async (word) => {
     console.log(word);
     await fetch(
-      `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=YOUR_API_KEY_HERE`
+      `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${API_KEY}`
     )
       .then((response) => response.json())
       .then((data) => {
