@@ -37,10 +37,10 @@ export default function App() {
     if (dateInDB === null) {
       console.log("in 1: " + dateInDB)
       await AsyncStorage.setItem("DATE_FOR_WORD_OF_THE_DAY", date);
-      getWordInfo(await getNewRandomWord());
+      getUserNewWordForToday();
     } else if (dateInDB !== date) {
       console.log("in 2: " + dateInDB)
-      getWordInfo(await getNewRandomWord());
+      getUserNewWordForToday();
     }
     else {
       console.log("in 3: " + dateInDB)
