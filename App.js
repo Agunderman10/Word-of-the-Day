@@ -14,7 +14,7 @@ import { styles } from "./styles";
 //import AsyncStorage from 'react-native';
 
 export default function App() {
-  const API_KEY = '68ef1da9-4447-4980-a060-d640eed3e121';
+  const API_KEY = 'YOUR_API_KEY_HERE';
   const [wordOfTheDay, setWordOfTheDay] = useState('');
   const [definition, setDefinition] = useState('');
   const [partOfSpeech, setPartOfSpeech] = useState('');

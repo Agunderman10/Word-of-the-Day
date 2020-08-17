@@ -9,9 +9,7 @@
 This app's sole purpose is to randomly generate a new word for you to learn everyday.
 
 ## Who is this app for?
-This app was not originally intended for anyone's use but my own. I love to learn, and decided to learn a new word everyday. I thought
-that building an app to determine what word I would learn would be a fun and quick project, so that's what I decided to build. If you're
-looking to learn a new word everyday then this app is perfect for you!
+This app was not originally intended for anyone's use but my own, but of course you're welcome to use it! I love to learn, and decided to learn a new word everyday. I thought that building an app to determine what word I would learn would be a fun and quick project, so that's what I decided to build. If you're looking to learn a new word everyday then this app is perfect for you!
 
 ## Getting the App Started
 I'll go over a quick guide on how to get the app running in case you're unfamiliar with the process. I'll also be including all of the download links in case you don't have all of the software you need to get started.
