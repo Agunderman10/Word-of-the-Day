@@ -40,6 +40,7 @@ export default function App() {
       getUserNewWordForToday();
     } else if (dateInDB !== date) {
       console.log("in 2: " + dateInDB)
+      await AsyncStorage.setItem("DATE_FOR_WORD_OF_THE_DAY", date);
       getUserNewWordForToday();
     }
     else {
