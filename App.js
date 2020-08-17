@@ -14,7 +14,7 @@ import { styles } from "./styles";
 //import AsyncStorage from 'react-native';
 
 export default function App() {
-  const API_KEY = 'YOUR_API_KEY_HERE';
+  const API_KEY = '68ef1da9-4447-4980-a060-d640eed3e121';
   const [wordOfTheDay, setWordOfTheDay] = useState('');
   const [definition, setDefinition] = useState('');
   const [partOfSpeech, setPartOfSpeech] = useState('');
@@ -86,6 +86,10 @@ export default function App() {
       });
   };
 
+  const getUserNewWordForToday = async() => {
+    getWordInfo(await getNewRandomWord());
+  }
+
   return (
     <Fragment>
       <SafeAreaView />
@@ -96,7 +100,7 @@ export default function App() {
         >{wordOfTheDay}</TextInput>
         <Text>{'"' + definition + '"'}</Text>
         <Text>Part of Speech: {partOfSpeech}</Text>
-        {/*<Button></Button>*/}
+        <Button title="New Word" onPress={getUserNewWordForToday}/>
         <StatusBar style="auto" />
       </View>
     </Fragment>
