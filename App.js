@@ -1,17 +1,22 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import {
   Text,
   View,
   SafeAreaView,
   TextInput,
   AsyncStorage,
+  Button
 } from "react-native";
 import { Fragment } from "react";
 import { styles } from "./styles";
 //import AsyncStorage from 'react-native';
 
 export default function App() {
+  const [wordOfTheDay, setWordOfTheDay] = useState('');
+  const [definition, setDefinition] = useState('');
+  const [partOfSpeech, setPartOfSpeech] = useState('');
+
   useEffect(async () => {
     // check if there's a date in async storage.
     // if there is, see if it is different than today's date. if it's different get new word and display new information
@@ -38,13 +43,22 @@ export default function App() {
     return await fetch("https://random-word-api.herokuapp.com/word?number=1")
       .then((response) => response.json())
       .then((data) => {
-        //console.log(data);
+        setWordOfTheDay(data);
         return data;
       });
   };
 
   const getWordInfo = async (word) => {
     console.log(word);
+    await fetch(
+      `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=YOUR_API_KEY_HERE`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setDefinition(data[0].shortdef);
+        setPartOfSpeech(data[0].fl);
+      });
   };
 
   return (
@@ -53,10 +67,11 @@ export default function App() {
       <View style={styles.container}>
         <TextInput
           style={styles.textBox}
-          value="hello"
           editable={false}
-        ></TextInput>
-        <Text>Open up App.js to start working on your app bro!</Text>
+        >{wordOfTheDay}</TextInput>
+        <Text>{'"' + definition + '"'}</Text>
+        <Text>Part of Speech: {partOfSpeech}</Text>
+        {/*<Button></Button>*/}
         <StatusBar style="auto" />
       </View>
     </Fragment>
