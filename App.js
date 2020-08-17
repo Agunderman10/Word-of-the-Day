@@ -7,17 +7,20 @@ import {
   TextInput,
   AsyncStorage, // I'm well aware of AsyncStorage's slow runtime and lack of indexing capabilities, but for this use case it's fine. Don't judge, bro. Don't judge.
   Button,
-  Alert
+  Alert,
+  TouchableOpacity,
+  Linking,
 } from "react-native";
 import { Fragment } from "react";
 import { styles } from "./styles";
+import { Card, CardButton } from "react-native-cards";
 //import AsyncStorage from 'react-native';
 
 export default function App() {
-  const API_KEY = 'YOUR_API_KEY_HERE';
-  const [wordOfTheDay, setWordOfTheDay] = useState('');
-  const [definition, setDefinition] = useState('');
-  const [partOfSpeech, setPartOfSpeech] = useState('');
+  const API_KEY = "YOUR_API_KEY_HERE";
+  const [wordOfTheDay, setWordOfTheDay] = useState("");
+  const [definition, setDefinition] = useState("");
+  const [partOfSpeech, setPartOfSpeech] = useState("");
 
   useEffect(async () => {
     // check if there's a date in async storage.
@@ -35,16 +38,15 @@ export default function App() {
       today.getDate();
 
     if (dateInDB === null) {
-      console.log("in 1: " + dateInDB)
+      console.log("in 1: " + dateInDB);
       await AsyncStorage.setItem("DATE_FOR_WORD_OF_THE_DAY", date);
       getUserNewWordForToday();
     } else if (dateInDB !== date) {
-      console.log("in 2: " + dateInDB)
+      console.log("in 2: " + dateInDB);
       await AsyncStorage.setItem("DATE_FOR_WORD_OF_THE_DAY", date);
       getUserNewWordForToday();
-    }
-    else {
-      console.log("in 3: " + dateInDB)
+    } else {
+      console.log("in 3: " + dateInDB);
       getWordDataFromAsyncStorage();
       //AsyncStorage.removeItem("DATE_FOR_WORD_OF_THE_DAY") // temporary
     }
@@ -53,14 +55,16 @@ export default function App() {
   const getWordDataFromAsyncStorage = async () => {
     setWordOfTheDay(await AsyncStorage.getItem("WORD_OF_THE_DAY"));
     setDefinition(await AsyncStorage.getItem("WORD_OF_THE_DAY_DEFINITION"));
-    setPartOfSpeech(await AsyncStorage.getItem("WORD_OF_THE_DAY_PART_OF_SPEECH"));
-  }
+    setPartOfSpeech(
+      await AsyncStorage.getItem("WORD_OF_THE_DAY_PART_OF_SPEECH")
+    );
+  };
 
   const addWordDataToAsyncStorage = async (word, shortdef, fl) => {
     await AsyncStorage.setItem("WORD_OF_THE_DAY", word);
     await AsyncStorage.setItem("WORD_OF_THE_DAY_DEFINITION", shortdef);
     await AsyncStorage.setItem("WORD_OF_THE_DAY_PART_OF_SPEECH", fl);
-  }
+  };
 
   const getNewRandomWord = async () => {
     return await fetch("https://random-word-api.herokuapp.com/word?number=1")
@@ -68,8 +72,12 @@ export default function App() {
       .then((data) => {
         setWordOfTheDay(data[0]);
         return data;
-      }).catch(() => {
-        Alert.alert('Error', 'There was an error getting a random word. Is the random word api down?');
+      })
+      .catch(() => {
+        Alert.alert(
+          "Error",
+          "There was an error getting a random word. Is the random word api down?"
+        );
       });
   };
 
@@ -81,29 +89,50 @@ export default function App() {
       .then(async (data) => {
         setDefinition(data[0].shortdef[0]);
         setPartOfSpeech(data[0].fl);
-        await addWordDataToAsyncStorage(JSON.stringify(word[0]), JSON.stringify(data[0].shortdef[0]), JSON.stringify(data[0].fl));
-      }).catch((error) => {
-        Alert.alert('Error Retrieving Word Info', "You probably forgot to add the API Key. If you're unsure of how to do this check the README for more information.\n\nActual error: " + error);
+        await addWordDataToAsyncStorage(
+          JSON.stringify(word[0]),
+          JSON.stringify(data[0].shortdef[0]),
+          JSON.stringify(data[0].fl)
+        );
+      })
+      .catch((error) => {
+        Alert.alert(
+          "Error Retrieving Word Info",
+          "You probably forgot to add the API Key. If you're unsure of how to do this check the README for more information.\n\nActual error: " +
+            error
+        );
       });
   };
 
-  const getUserNewWordForToday = async() => {
+  const getUserNewWordForToday = async () => {
     getWordInfo(await getNewRandomWord());
+  };
+
+  const lookUpWithGoogle = () => {
+    let url = `https://www.google.com/search?q=${wordOfTheDay}`;
+    Linking.canOpenURL(url).then(isSupported => {
+      if(isSupported) {
+        Linking.openURL(url);
+      }
+      else {
+        Alert.alert('Error opening page', 'There was an issue opening the page.');
+      }
+    });
   }
 
   return (
     <Fragment>
       <SafeAreaView />
-      <View style={styles.container}>
-        <TextInput
-          style={styles.textBox}
-          editable={false}
-        >{wordOfTheDay}</TextInput>
-        <Text>{'"' + definition + '"'}</Text>
-        <Text>Part of Speech: {partOfSpeech}</Text>
-        <Button title="New Word" onPress={getUserNewWordForToday}/>
-        <StatusBar style="auto" />
-      </View>
+      <Card>
+        <View style={styles.container}>
+          <Text style={styles.wordStyles}>{wordOfTheDay}</Text>
+          <Text style={styles.partOfSpeechStyles}>{partOfSpeech}</Text>
+          <Text style={styles.definitionStyles}>{"1. " + definition}</Text>
+          <CardButton style={styles.lookUpWithGoogleButtonStyles} onPress={lookUpWithGoogle} title="Look up with Google"/>
+          <CardButton style={styles.newWordButtonStyles} onPress={getUserNewWordForToday} title="New Word"/>
+          <StatusBar style="auto" />
+        </View>
+      </Card>
     </Fragment>
   );
 }
