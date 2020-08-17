@@ -6,7 +6,8 @@ import {
   SafeAreaView,
   TextInput,
   AsyncStorage,
-  Button
+  Button,
+  Alert
 } from "react-native";
 import { Fragment } from "react";
 import { styles } from "./styles";
@@ -59,6 +60,8 @@ export default function App() {
         console.log(data);
         setDefinition(data[0].shortdef);
         setPartOfSpeech(data[0].fl);
+      }).catch(() => {
+        Alert.alert('Error Retrieving Word Info', "You probably forgot to add the API Key. If you're unsure of how to do this check the README for more information.")
       });
   };
 
