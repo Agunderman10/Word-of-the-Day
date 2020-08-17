@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: "#1FDDFF",
     marginTop: Platform.OS === "ios" ? 20 : 0,
+    width: '100%',
   },
   wordStyles: {
     marginTop: 20,
