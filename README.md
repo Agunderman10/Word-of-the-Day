@@ -16,9 +16,14 @@ I'll go over a quick guide on how to get the app running in case you're unfamili
 * Firstly, we're going to clone the application to your local machine so you can run it. With [Git](https://git-scm.com/downloads) installed navigate to the directory you'd like to install the app (maybe your desktop?) and type the following into your terminal:
 > git clone https://github.com/Agunderman10/Word-of-the-Day.git
 
-* Our clone brought the project onto our local machine, but there are external packages that we still need to install. Navigate into the project directory with the cd (change directory as shown below) command and with [NPM](https://nodejs.org/en/) (npm will come with the installation of nodejs) installed type the following into your terminal:
+* Our clone brought the project onto our local machine, but there are external packages that we still need to install. If you have an iPhone then skip this next step and go to the one right after. Navigate into the project directory with the cd (change directory as shown below) command and with [NPM](https://nodejs.org/en/) (npm will come with the installation of nodejs) installed type the following into your terminal:
 > cd Word-of-the-Day
 >> npm install
+
+* Only perform this step if you have an apple device in which you want to run this. Instead of above, write the following into your
+terminal:
+> cd Word-of-the-Day
+>> pod install
 
 * Next, connect your phone with the correct cord (usb to an android in my case). Make sure you have developer options turned on. I'll let you google how to do that on your individual phone. Gotta make you work for something ;)
 
