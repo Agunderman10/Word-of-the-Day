@@ -87,11 +87,11 @@ export default function App() {
     )
       .then((response) => response.json())
       .then(async (data) => {
-        setDefinition(data[0].shortdef[0]);
+        setDefinition(data[0].shortdef);
         setPartOfSpeech(data[0].fl);
         await addWordDataToAsyncStorage(
           JSON.stringify(word[0]),
-          JSON.stringify(data[0].shortdef[0]),
+          JSON.stringify(data[0].shortdef),
           JSON.stringify(data[0].fl)
         );
       })
@@ -110,15 +110,17 @@ export default function App() {
 
   const lookUpWithGoogle = () => {
     let url = `https://www.google.com/search?q=${wordOfTheDay}`;
-    Linking.canOpenURL(url).then(isSupported => {
-      if(isSupported) {
+    Linking.canOpenURL(url).then((isSupported) => {
+      if (isSupported) {
         Linking.openURL(url);
-      }
-      else {
-        Alert.alert('Error opening page', 'There was an issue opening the page.');
+      } else {
+        Alert.alert(
+          "Error opening page",
+          "There was an issue opening the page."
+        );
       }
     });
-  }
+  };
 
   return (
     <Fragment>
@@ -128,8 +130,16 @@ export default function App() {
           <Text style={styles.wordStyles}>{wordOfTheDay}</Text>
           <Text style={styles.partOfSpeechStyles}>{partOfSpeech}</Text>
           <Text style={styles.definitionStyles}>{"1. " + definition}</Text>
-          <CardButton style={styles.lookUpWithGoogleButtonStyles} onPress={lookUpWithGoogle} title="Look up with Google"/>
-          <CardButton style={styles.newWordButtonStyles} onPress={getUserNewWordForToday} title="New Word"/>
+          <CardButton
+            style={styles.lookUpWithGoogleButtonStyles}
+            onPress={lookUpWithGoogle}
+            title="Look up with Google"
+          />
+          <CardButton
+            style={styles.newWordButtonStyles}
+            onPress={getUserNewWordForToday}
+            title="New Word"
+          />
           <StatusBar style="auto" />
         </View>
       </Card>

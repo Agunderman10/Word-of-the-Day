@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: "#1FDDFF",
     marginTop: Platform.OS === "ios" ? 20 : 0,
-    width: '100%',
+    width: "100%",
   },
   wordStyles: {
     marginTop: 20,
@@ -22,12 +22,12 @@ export const styles = StyleSheet.create({
   definitionStyles: {
     marginTop: 30,
     fontSize: 15,
-    color: 'black',
+    color: "black",
   },
   partOfSpeechStyles: {
     marginTop: 30,
     fontSize: 15,
-    color: 'black',
+    color: "black",
   },
   newWordButtonStyles: {
     alignItems: "center",
@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
     height: "7%",
   },
   lookUpWithGoogleButtonStyles: {
-      marginTop: 15,
-      color: "#1FDDFF",
-  }
+    marginTop: 15,
+    color: "#1FDDFF",
+  },
 });
