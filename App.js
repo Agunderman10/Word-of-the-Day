@@ -1,14 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
   SafeAreaView,
-  TextInput,
   AsyncStorage, // I'm well aware of AsyncStorage's slow runtime and lack of indexing capabilities, but for this use case it's fine. Don't judge, bro. Don't judge.
-  Button,
   Alert,
-  TouchableOpacity,
   Linking,
 } from "react-native";
 import { Fragment } from "react";
