@@ -16,7 +16,7 @@ import { styles } from "./styles";
 import { Card, CardButton } from "react-native-cards";
 
 export default function App() {
-  const API_KEY = "YOUR_API_KEY_HERE";
+  const API_KEY = "68ef1da9-4447-4980-a060-d640eed3e121";
   const [wordOfTheDay, setWordOfTheDay] = useState("");
   const [definition, setDefinition] = useState("");
   const [partOfSpeech, setPartOfSpeech] = useState("");
@@ -32,10 +32,10 @@ export default function App() {
       today.getDate();
 
     if (dateInDB === null) {
-      await AsyncStorage.setItem("DATE_FOR_WORD_OF_THE_DAY", date);
+      AsyncStorage.setItem("DATE_FOR_WORD_OF_THE_DAY", date);
       getUserNewWordForToday();
     } else if (dateInDB !== date) {
-      await AsyncStorage.setItem("DATE_FOR_WORD_OF_THE_DAY", date);
+      AsyncStorage.setItem("DATE_FOR_WORD_OF_THE_DAY", date);
       getUserNewWordForToday();
     } else {
       getWordDataFromAsyncStorage();
@@ -50,10 +50,10 @@ export default function App() {
     );
   };
 
-  const addWordDataToAsyncStorage = async (word, shortdef, fl) => {
-    await AsyncStorage.setItem("WORD_OF_THE_DAY", word);
-    await AsyncStorage.setItem("WORD_OF_THE_DAY_DEFINITION", shortdef);
-    await AsyncStorage.setItem("WORD_OF_THE_DAY_PART_OF_SPEECH", fl);
+  const addWordDataToAsyncStorage = (word, shortdef, fl) => {
+    AsyncStorage.setItem("WORD_OF_THE_DAY", word);
+    AsyncStorage.setItem("WORD_OF_THE_DAY_DEFINITION", shortdef);
+    AsyncStorage.setItem("WORD_OF_THE_DAY_PART_OF_SPEECH", fl);
   };
 
   const getNewRandomWord = async () => {
@@ -79,7 +79,7 @@ export default function App() {
       .then(async (data) => {
         setDefinition(data[0].shortdef);
         setPartOfSpeech(data[0].fl);
-        await addWordDataToAsyncStorage(
+        addWordDataToAsyncStorage(
           JSON.stringify(word[0]),
           JSON.stringify(data[0].shortdef),
           JSON.stringify(data[0].fl)
