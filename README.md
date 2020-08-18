@@ -1,6 +1,6 @@
 # Word-of-the-Day-App
 
-# To-Do
+# To-Do - These will be done in the future. Perhaps after interview season is over.
 * Fix the UI, cause rn it's a disaster
 * Fix UX issue where the word information takes a few seconds to show up. Something to distract the user with...
 
