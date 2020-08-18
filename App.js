@@ -16,13 +16,18 @@ import { styles } from "./styles";
 import { Card, CardButton } from "react-native-cards";
 
 export default function App() {
-  const API_KEY = "68ef1da9-4447-4980-a060-d640eed3e121";
+  const API_KEY = "YOUR_API_KEY_HERE";
   const [wordOfTheDay, setWordOfTheDay] = useState("");
   const [definition, setDefinition] = useState("");
   const [partOfSpeech, setPartOfSpeech] = useState("");
 
-  useEffect(async () => {
-    const dateInDB = await AsyncStorage.getItem("DATE_FOR_WORD_OF_THE_DAY");
+  useEffect(() => {
+    determineIfTodayIsNewDay();
+  }, []);
+
+  const determineIfTodayIsNewDay = async () => {
+    const dateInDB = await getDateFromStorage();
+
     var today = new Date();
     var date =
       today.getFullYear() +
@@ -40,7 +45,18 @@ export default function App() {
     } else {
       getWordDataFromAsyncStorage();
     }
-  }, []);
+  }
+
+  const getDateFromStorage = async () => {
+    return await AsyncStorage.getItem("DATE_FOR_WORD_OF_THE_DAY")
+      .then((date) => {
+        console.log('date in func: ' + date);
+        return date;
+      })
+      .catch(() => {
+        Alert.alert('', 'There was an error retrieving data from storage. Please restart the app and try again.');
+      });
+  };
 
   const getWordDataFromAsyncStorage = async () => {
     setWordOfTheDay(await AsyncStorage.getItem("WORD_OF_THE_DAY"));
