@@ -28,7 +28,6 @@ export default function App() {
     // if it's not different then don't do anything.
 
     const dateInDB = await AsyncStorage.getItem("DATE_FOR_WORD_OF_THE_DAY");
-    console.log(dateInDB);
     var today = new Date();
     var date =
       today.getFullYear() +
@@ -38,15 +37,12 @@ export default function App() {
       today.getDate();
 
     if (dateInDB === null) {
-      console.log("in 1: " + dateInDB);
       await AsyncStorage.setItem("DATE_FOR_WORD_OF_THE_DAY", date);
       getUserNewWordForToday();
     } else if (dateInDB !== date) {
-      console.log("in 2: " + dateInDB);
       await AsyncStorage.setItem("DATE_FOR_WORD_OF_THE_DAY", date);
       getUserNewWordForToday();
     } else {
-      console.log("in 3: " + dateInDB);
       getWordDataFromAsyncStorage();
       //AsyncStorage.removeItem("DATE_FOR_WORD_OF_THE_DAY") // temporary
     }
