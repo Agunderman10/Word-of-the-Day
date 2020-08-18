@@ -14,7 +14,6 @@ import {
 import { Fragment } from "react";
 import { styles } from "./styles";
 import { Card, CardButton } from "react-native-cards";
-//import AsyncStorage from 'react-native';
 
 export default function App() {
   const API_KEY = "YOUR_API_KEY_HERE";
@@ -23,10 +22,6 @@ export default function App() {
   const [partOfSpeech, setPartOfSpeech] = useState("");
 
   useEffect(async () => {
-    // check if there's a date in async storage.
-    // if there is, see if it is different than today's date. if it's different get new word and display new information
-    // if it's not different then don't do anything.
-
     const dateInDB = await AsyncStorage.getItem("DATE_FOR_WORD_OF_THE_DAY");
     var today = new Date();
     var date =
@@ -44,7 +39,6 @@ export default function App() {
       getUserNewWordForToday();
     } else {
       getWordDataFromAsyncStorage();
-      //AsyncStorage.removeItem("DATE_FOR_WORD_OF_THE_DAY") // temporary
     }
   }, []);
 
